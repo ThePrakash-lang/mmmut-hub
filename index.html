@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMMUT Study Hub - Electrical Engineering</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #800000; /* MMMUT Maroon */
+            --secondary: #FFD700; /* Gold accent */
+            --accent: #FF6B6B;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #600000 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+        }
+        
+        .logo-img {
+            height: 60px;
+            margin-right: 15px;
+        }
+        
+        .logo-text {
+            text-align: center;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 0.5rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--secondary);
+            bottom: 0;
+            left: 0;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            margin: 2rem auto;
+            min-height: 70vh;
+            flex: 1;
+            width: 100%;
+        }
+        
+        /* Page Content */
+        .page-content {
+            display: none;
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-right: 1rem;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Social Feed Styles */
+        .post-container {
+            margin-bottom: 2rem;
+        }
+        
+        .post {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .post-user {
+            font-weight: 600;
+        }
+        
+        .post-time {
+            font-size: 0.8rem;
+            color: #777;
+            margin-left: auto;
+        }
+        
+        .post-content {
+            padding: 1rem;
+        }
+        
+        .post-text {
+            margin-bottom: 1rem;
+        }
+        
+        .post-image {
+            width: 100%;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .post-actions {
+            display: flex;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+            cursor: pointer;
+            color: #555;
+            transition: color 0.2s;
+        }
+        
+        .post-action:hover {
+            color: var(--primary);
+        }
+        
+        .post-action i {
+            margin-right: 5px;
+        }
+        
+        .post-likes {
+            padding: 0 1rem 0.5rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .post-comments {
+            padding: 0 1rem;
+            border-top: 1px solid #eee;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .comment {
+            display: flex;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .comment-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-user {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .comment-text {
+            font-size: 0.9rem;
+        }
+        
+        .comment-time {
+            font-size: 0.7rem;
+            color: #777;
+        }
+        
+        .comment-form {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .comment-input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .comment-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+        
+        /* Create Post Form */
+        .create-post {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .post-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            resize: none;
+        }
+        
+        .post-options {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .post-option {
+            display: flex;
+            align-items: center;
+            color: #555;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .post-option:hover {
+            background: #f5f5f5;
+        }
+        
+        .post-option i {
+            margin-right: 5px;
+        }
+        
+        .post-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        
+        /* Chat Section */
+        .chat-section {
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+        
+        .chat-header {
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            max-width: 80%;
+        }
+        
+        .message-sent {
+            margin-left: auto;
+            background: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 18px 18px 0 18px;
+        }
+        
+        .message-received {
+            margin-right: auto;
+            background: #f1f1f1;
+            padding: 0.5rem 1rem;
+            border-radius: 18px 18px 18px 0;
+        }
+        
+        .message-user {
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: #777;
+            text-align: right;
+        }
+        
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        /* Resource Display Page */
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        
+        /* Resource Cards */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-header {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .resource-type {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .resource-body {
+            padding: 1rem;
+        }
+        
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-description {
+            margin-bottom: 1rem;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        .resource-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #600000;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .btn-secondary:hover {
+            background: #e6c200;
+        }
+        
+        /* Contribution Form */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* File upload styles */
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--primary);
+            background-color: rgba(128, 0, 0, 0.05);
+        }
+
+        .file-upload-label i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-label span {
+            color: #555;
+            text-align: center;
+        }
+
+        .file-upload-input {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .lucky-person {
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.3rem 0;
+            }
+            
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .page-content {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .chat-section {
+                width: 100%;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with MMMUT Logo -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <img src="https://mmmut.ac.in/img/logo.png" alt="MMMUT Logo" class="logo-img">
+                <div class="logo-text">
+                    <h1>MMMUT Study Hub</h1>
+                    <p>Electrical Engineering Resources</p>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="resources">Resources</a></li>
+                    <li><a href="#" class="nav-link" data-page="feed">Social Feed</a></li>
+                    <li><a href="#" class="nav-link" data-page="contribute">Contribute</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Resources Page -->
+        <section class="page-content active" id="resources-page">
+            <h2>Study Resources</h2>
+            
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="semester-filter">Semester</label>
+                    <select id="semester-filter">
+                        <option value="all">All Semesters</option>
+                        <option value="1">1st Semester</option>
+                        <option value="2">2nd Semester</option>
+                        <option value="3">3rd Semester</option>
+                        <option value="4">4th Semester</option>
+                        <option value="5">5th Semester</option>
+                        <option value="6">6th Semester</option>
+                        <option value="7">7th Semester</option>
+                        <option value="8">8th Semester</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="subject-filter">Subject</label>
+                    <select id="subject-filter">
+                        <option value="all">All Subjects</option>
+                        <!-- Will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="type-filter">Resource Type</label>
+                    <select id="type-filter">
+                        <option value="all">All Types</option>
+                        <option value="notes">Notes</option>
+                        <option value="pyq">PYQs</option>
+                        <option value="lab">Lab Manuals</option>
+                        <option value="book">Books</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Resource Grid -->
+            <div class="resource-grid" id="resource-container">
+                <!-- Resources will be loaded here by JavaScript -->
+                <p>No resources available yet. Be the first to contribute!</p>
+            </div>
+        </section>
+        
+        <!-- Social Feed Page -->
+        <section class="page-content" id="feed-page">
+            <h2>Social Feed</h2>
+            
+            <!-- Create Post Form -->
+            <div class="create-post">
+                <textarea class="post-input" placeholder="What's on your mind?" id="post-text"></textarea>
+                <div class="post-options">
+                    <div class="post-option">
+                        <i class="fas fa-image"></i> Photo
+                        <input type="file" id="post-image" accept="image/*" style="display: none;">
+                    </div>
+                    <button class="post-submit" id="post-submit">Post</button>
+                </div>
+            </div>
+            
+            <!-- Posts Container -->
+            <div class="post-container" id="posts-container">
+                <!-- Posts will be loaded here by JavaScript -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">AD</div>
+                        <div class="post-user">Admin</div>
+                        <div class="post-time">Just now</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-text">Welcome to MMMUT Study Hub! Share your study materials, ask questions, and help each other learn.</div>
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-action like-btn">
+                            <i class="far fa-thumbs-up"></i> Like
+                        </div>
+                        <div class="post-action comment-btn">
+                            <i class="far fa-comment"></i> Comment
+                        </div>
+                        <div class="post-action share-btn">
+                            <i class="fas fa-share"></i> Share
+                        </div>
+                    </div>
+                    <div class="post-likes">0 likes</div>
+                    <div class="post-comments">
+                        <!-- Comments will appear here -->
+                    </div>
+                    <div class="comment-form">
+                        <input type="text" class="comment-input" placeholder="Write a comment...">
+                        <button class="comment-submit">Post</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contribute Page -->
+        <section class="page-content" id="contribute-page">
+            <h2>Contribute Resources</h2>
+            <form id="resource-form">
+                <div class="form-group">
+                    <label for="contribute-semester">Semester*</label>
+                    <select id="contribute-semester" required>
+                        <option value="">Select Semester</option>
+                        <option value="1">1st Semester</option>
+                        <option value="2">2nd Semester</option>
+                        <option value="3">3rd Semester</option>
+                        <option value="4">4th Semester</option>
+                        <option value="5">5th Semester</option>
+                        <option value="6">6th Semester</option>
+                        <option value="7">7th Semester</option>
+                        <option value="8">8th Semester</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contribute-subject">Subject Name*</label>
+                    <input type="text" id="contribute-subject" placeholder="e.g., Network Analysis" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contribute-type">Resource Type*</label>
+                    <select id="contribute-type" required>
+                        <option value="">Select Type</option>
+                        <option value="notes">Notes</option>
+                        <option value="pyq">PYQs</option>
+                        <option value="lab">Lab Manual</option>
+                        <option value="book">Book/Reference</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contribute-title">Title*</label>
+                    <input type="text" id="contribute-title" placeholder="e.g., Network Theorems Notes" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contribute-description">Description</label>
+                    <textarea id="contribute-description" placeholder="Brief description of the resource"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Upload Resource*</label>
+                    <div class="file-upload">
+                        <label for="resource-file" class="file-upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Click to upload or drag and drop</span>
+                            <span>PDF, DOCX, PPTX, JPG, PNG (Max 10MB)</span>
+                        </label>
+                        <input type="file" id="resource-file" class="file-upload-input" required>
+                        <div id="file-name" class="file-name">No file selected</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contribute-link">Resource Link (Optional)</label>
+                    <input type="url" id="contribute-link" placeholder="https://drive.google.com/...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contribute-author">Your Name (Optional)</label>
+                    <input type="text" id="contribute-author" placeholder="Anonymous">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-share-square"></i> Submit Resource
+                </button>
+            </form>
+        </section>
+        
+        <!-- About Page -->
+        <section class="page-content" id="about-page">
+            <h2>About MMMUT Study Hub</h2>
+            <p>This is a collaborative platform for electrical engineering students at Madan Mohan Malaviya University of Technology (MMMUT) to share study resources.</p>
+            
+            <h3>How It Works</h3>
+            <ol>
+                <li><strong>Contribute</strong> - Share your notes, PYQs, lab manuals using our simple form</li>
+                <li><strong>Discover</strong> - Find resources by semester, subject, and type</li>
+                <li><strong>Learn</strong> - Access high-quality study materials from fellow students</li>
+                <li><strong>Connect</strong> - Discuss with peers through posts and chat</li>
+            </ol>
+            
+            <h3>Guidelines</h3>
+            <ul>
+                <li>Only share materials you have created or have permission to share</li>
+                <li>Provide accurate descriptions of your contributions</li>
+                <li>Keep the platform focused on academic resources</li>
+                <li>Be respectful in all interactions</li>
+            </ul>
+            
+            <div class="btn btn-secondary" id="back-to-resources">
+                <i class="fas fa-arrow-left"></i> Back to Resources
+            </div>
+        </section>
+        
+        <!-- Chat Section -->
+        <div class="chat-section">
+            <div class="chat-header">Study Group Chat</div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message message-received">
+                    <div class="message-user">Admin</div>
+                    <div class="message-text">Welcome to the study group chat! Ask questions and help each other here.</div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" placeholder="Type your message..." id="chat-input">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#" class="nav-link" data-page="resources">Resources</a>
+                <a href="#" class="nav-link" data-page="feed">Social Feed</a>
+                <a href="#" class="nav-link" data-page="contribute">Contribute</a>
+                <a href="#" class="nav-link" data-page="about">About</a>
+                <a href="https://mmmut.ac.in" target="_blank">MMMUT Official</a>
+            </div>
+            <p class="copyright">© 2025 MMMUT Study Hub | Collaborative Platform by Students</p>
+            <p class="lucky-person">For my lucky person</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data - starts empty
+        let resources = [];
+        let posts = [
+            {
+                id: 1,
+                userId: "admin",
+                userName: "Admin",
+                userInitials: "AD",
+                text: "Welcome to MMMUT Study Hub! Share your study materials, ask questions, and help each other learn.",
+                image: null,
+                time: new Date().toISOString(),
+                likes: 0,
+                likedBy: [],
+                comments: []
+            }
+        ];
+        
+        let chatMessages = [
+            {
+                id: 1,
+                userId: "admin",
+                userName: "Admin",
+                text: "Welcome to the study group chat! Ask questions and help each other here.",
+                time: new Date().toISOString()
+            }
+        ];
+        
+        // DOM Elements
+        const resourceContainer = document.getElementById('resource-container');
+        const semesterFilter = document.getElementById('semester-filter');
+        const subjectFilter = document.getElementById('subject-filter');
+        const typeFilter = document.getElementById('type-filter');
+        const resourceForm = document.getElementById('resource-form');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page-content');
+        const backToResources = document.getElementById('back-to-resources');
+        const fileUploadInput = document.getElementById('resource-file');
+        const fileNameDisplay = document.getElementById('file-name');
+        const postsContainer = document.getElementById('posts-container');
+        const postTextInput = document.getElementById('post-text');
+        const postImageInput = document.getElementById('post-image');
+        const postSubmitBtn = document.getElementById('post-submit');
+        const chatMessagesContainer = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        
+        // Current user (in a real app, this would come from authentication)
+        const currentUser = {
+            id: "user1",
+            name: "Current User",
+            initials: "CU"
+        };
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load all resources
+            displayResources(resources);
+            
+            // Load all posts
+            displayPosts();
+            
+            // Load chat messages
+            displayChatMessages();
+            
+            // Populate subject filter based on semester
+            semesterFilter.addEventListener('change', updateSubjectFilter);
+            
+            // Apply filters when any filter changes
+            semesterFilter.addEventListener('change', applyFilters);
+            subjectFilter.addEventListener('change', applyFilters);
+            typeFilter.addEventListener('change', applyFilters);
+            
+            // Handle form submission
+            resourceForm.addEventListener('submit', handleFormSubmit);
+            
+            // Navigation between pages
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    showPage(pageId);
+                    
+                    // Update active nav link
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // Back to resources button
+            if (backToResources) {
+                backToResources.addEventListener('click', function() {
+                    showPage('resources');
+                    
+                    // Update active nav link
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove('active');
+                        if (navLink.getAttribute('data-page') === 'resources') {
+                            navLink.classList.add('active');
+                        }
+                    });
+                });
+            }
+            
+            // File upload display
+            fileUploadInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = 'No file selected';
+                }
+            });
+            
+            // Post image selection
+            document.querySelector('.post-option').addEventListener('click', function() {
+                postImageInput.click();
+            });
+            
+            // Post submission
+            postSubmitBtn.addEventListener('click', createPost);
+            
+            // Post on Enter key
+            postTextInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    createPost();
+                }
+            });
+            
+            // Chat message submission
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+            
+            // Initialize subject filter
+            updateSubjectFilter();
+        });
+        
+        // Display resources in the grid
+        function displayResources(resourcesToDisplay) {
+            resourceContainer.innerHTML = '';
+            
+            if (resourcesToDisplay.length === 0) {
+                resourceContainer.innerHTML = '<p>No resources found matching your filters.</p>';
+                return;
+            }
+            
+            resourcesToDisplay.forEach(resource => {
+                const typeLabels = {
+                    'notes': 'Study Notes',
+                    'pyq': 'PYQs',
+                    'lab': 'Lab Manual',
+                    'book': 'Book',
+                    'other': 'Resource'
+                };
+                
+                const semesterLabels = {
+                    '1': '1st Semester',
+                    '2': '2nd Semester',
+                    '3': '3rd Semester',
+                    '4': '4th Semester',
+                    '5': '5th Semester',
+                    '6': '6th Semester',
+                    '7': '7th Semester',
+                    '8': '8th Semester'
+                };
+                
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                resourceCard.innerHTML = `
+                    <div class="resource-header">
+                        ${resource.subject}
+                        <span class="resource-type">${typeLabels[resource.type] || 'Resource'}</span>
+                    </div>
+                    <div class="resource-body">
+                        <div class="resource-meta">
+                            <span>${semesterLabels[resource.semester] || resource.semester + 'th Semester'}</span>
+                            <span>${formatDate(resource.date)}</span>
+                        </div>
+                        <h3>${resource.title}</h3>
+                        <p class="resource-description">${resource.description}</p>
+                        <div class="resource-actions">
+                            <a href="${resource.link || '#'}" target="_blank" class="btn btn-primary">
+                                <i class="fas fa-download"></i> Download
+                            </a>
+                            <button class="btn btn-secondary" onclick="shareResource('${resource.title}', '${resource.link || '#'}')">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                        ${resource.author ? `<p style="margin-top: 0.5rem; font-size: 0.8rem; color: #666;">Contributed by: ${resource.author}</p>` : ''}
+                    </div>
+                `;
+                
+                resourceContainer.appendChild(resourceCard);
+            });
+        }
+        
+        // Display posts in the feed
+        function displayPosts() {
+            postsContainer.innerHTML = '';
+            
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.dataset.id = post.id;
+                
+                // Format time
+                const postTime = formatTimeAgo(post.time);
+                
+                // Build comments HTML
+                let commentsHTML = '';
+                post.comments.forEach(comment => {
+                    const commentTime = formatTimeAgo(comment.time);
+                    commentsHTML += `
+                        <div class="comment">
+                            <div class="comment-avatar">${comment.userInitials}</div>
+                            <div class="comment-content">
+                                <div class="comment-user">${comment.userName}</div>
+                                <div class="comment-text">${comment.text}</div>
+                                <div class="comment-time">${commentTime}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-avatar">${post.userInitials}</div>
+                        <div class="post-user">${post.userName}</div>
+                        <div class="post-time">${postTime}</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-text">${post.text}</div>
+                        ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-action like-btn" onclick="toggleLike(${post.id})">
+                            <i class="far ${post.likedBy.includes(currentUser.id) ? 'fa-thumbs-up liked' : 'fa-thumbs-up'}"></i> Like
+                        </div>
+                        <div class="post-action comment-btn" onclick="focusComment(${post.id})">
+                            <i class="far fa-comment"></i> Comment
+                        </div>
+                        <div class="post-action share-btn" onclick="sharePost(${post.id})">
+                            <i class="fas fa-share"></i> Share
+                        </div>
+                    </div>
+                    <div class="post-likes">${post.likes} ${post.likes === 1 ? 'like' : 'likes'}</div>
+                    <div class="post-comments">
+                        ${commentsHTML}
+                    </div>
+                    <div class="comment-form">
+                        <input type="text" class="comment-input" placeholder="Write a comment..." data-post-id="${post.id}">
+                        <button class="comment-submit" onclick="addComment(${post.id})">Post</button>
+                    </div>
+                `;
+                
+                postsContainer.appendChild(postElement);
+            });
+        }
+        
+        // Display chat messages
+        function displayChatMessages() {
+            chatMessagesContainer.innerHTML = '';
+            
+            chatMessages.forEach(message => {
+                const messageElement = document.createElement('div');
+                const isCurrentUser = message.userId === currentUser.id;
+                
+                messageElement.className = `message ${isCurrentUser ? 'message-sent' : 'message-received'}`;
+                messageElement.innerHTML = `
+                    ${!isCurrentUser ? `<div class="message-user">${message.userName}</div>` : ''}
+                    <div class="message-text">${message.text}</div>
+                    <div class="message-time">${formatTimeAgo(message.time)}</div>
+                `;
+                
+                chatMessagesContainer.appendChild(messageElement);
+            });
+            
+            // Scroll to bottom
+            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+        }
+        
+        // Create a new post
+        function createPost() {
+            const text = postTextInput.value.trim();
+            if (!text) return;
+            
+            const newPost = {
+                id: posts.length + 1,
+                userId: currentUser.id,
+                userName: currentUser.name,
+                userInitials: currentUser.initials,
+                text: text,
+                image: null, // In a real app, you would upload the image
+                time: new Date().toISOString(),
+                likes: 0,
+                likedBy: [],
+                comments: []
+            };
+            
+            posts.unshift(newPost);
+            postTextInput.value = '';
+            displayPosts();
+        }
+        
+        // Toggle like on a post
+        function toggleLike(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+            
+            const likeIndex = post.likedBy.indexOf(currentUser.id);
+            
+            if (likeIndex === -1) {
+                post.likedBy.push(currentUser.id);
+                post.likes++;
+            } else {
+                post.likedBy.splice(likeIndex, 1);
+                post.likes--;
+            }
+            
+            displayPosts();
+        }
+        
+        // Add comment to a post
+        function addComment(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+            
+            const commentInput = document.querySelector(`.comment-input[data-post-id="${postId}"]`);
+            const text = commentInput.value.trim();
+            if (!text) return;
+            
+            const newComment = {
+                id: post.comments.length + 1,
+                userId: currentUser.id,
+                userName: currentUser.name,
+                userInitials: currentUser.initials,
+                text: text,
+                time: new Date().toISOString()
+            };
+            
+            post.comments.push(newComment);
+            commentInput.value = '';
+            displayPosts();
+        }
+        
+        // Focus comment input
+        function focusComment(postId) {
+            const commentInput = document.querySelector(`.comment-input[data-post-id="${postId}"]`);
+            commentInput.focus();
+        }
+        
+        // Share a post
+        function sharePost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+            
+            const shareText = `${post.userName}: ${post.text.substring(0, 50)}...`;
+            const shareUrl = window.location.href.split('?')[0] + `?post=${postId}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check out this post from MMMUT Study Hub',
+                    text: shareText,
+                    url: shareUrl
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    copyToClipboard(shareUrl);
+                });
+            } else {
+                copyToClipboard(shareUrl);
+            }
+        }
+        
+        // Send chat message
+        function sendChatMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            
+            const newMessage = {
+                id: chatMessages.length + 1,
+                userId: currentUser.id,
+                userName: currentUser.name,
+                text: text,
+                time: new Date().toISOString()
+            };
+            
+            chatMessages.push(newMessage);
+            chatInput.value = '';
+            displayChatMessages();
+        }
+        
+        // Update subject filter based on selected semester
+        function updateSubjectFilter() {
+            const selectedSemester = semesterFilter.value;
+            subjectFilter.innerHTML = '<option value="all">All Subjects</option>';
+            
+            if (selectedSemester === 'all') {
+                // Get all unique subjects
+                const allSubjects = [...new Set(resources.map(r => r.subject))];
+                allSubjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject;
+                    option.textContent = subject;
+                    subjectFilter.appendChild(option);
+                });
+            } else {
+                // Get subjects for selected semester
+                const semesterSubjects = [...new Set(resources
+                    .filter(r => r.semester === selectedSemester)
+                    .map(r => r.subject)
+                )];
+                
+                semesterSubjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject;
+                    option.textContent = subject;
+                    subjectFilter.appendChild(option);
+                });
+            }
+        }
+        
+        // Apply all filters
+        function applyFilters() {
+            const semester = semesterFilter.value;
+            const subject = subjectFilter.value;
+            const type = typeFilter.value;
+            
+            let filteredResources = resources;
+            
+            if (semester !== 'all') {
+                filteredResources = filteredResources.filter(r => r.semester === semester);
+            }
+            
+            if (subject !== 'all') {
+                filteredResources = filteredResources.filter(r => r.subject === subject);
+            }
+            
+            if (type !== 'all') {
+                filteredResources = filteredResources.filter(r => r.type === type);
+            }
+            
+            displayResources(filteredResources);
+        }
+        
+        // Handle form submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const newResource = {
+                id: resources.length + 1,
+                semester: document.getElementById('contribute-semester').value,
+                subject: document.getElementById('contribute-subject').value,
+                type: document.getElementById('contribute-type').value,
+                title: document.getElementById('contribute-title').value,
+                description: document.getElementById('contribute-description').value,
+                link: document.getElementById('contribute-link').value || '#',
+                author: document.getElementById('contribute-author').value || 'Anonymous',
+                date: new Date().toISOString().split('T')[0] // YYYY-MM-DD
+            };
+            
+            // Add to resources array
+            resources.unshift(newResource);
+            
+            // Reset form
+            resourceForm.reset();
+            fileNameDisplay.textContent = 'No file selected';
+            
+            // Show success message and switch to resources page
+            alert('Thank you for your contribution! Your resource has been added.');
+            showPage('resources');
+            
+            // Update active nav link
+            navLinks.forEach(navLink => {
+                navLink.classList.remove('active');
+                if (navLink.getAttribute('data-page') === 'resources') {
+                    navLink.classList.add('active');
+                }
+            });
+            
+            // Refresh display
+            updateSubjectFilter();
+            applyFilters();
+        }
+        
+        // Show specific page
+        function showPage(pageId) {
+            pages.forEach(page => {
+                page.classList.remove('active');
+                if (page.id === `${pageId}-page`) {
+                    page.classList.add('active');
+                }
+            });
+        }
+        
+        // Share resource function
+        function shareResource(title, url) {
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    url: url
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    copyToClipboard(url);
+                });
+            } else {
+                copyToClipboard(url);
+            }
+        }
+        
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Link copied to clipboard!');
+        }
+        
+        // Format date as DD/MM/YYYY
+        function formatDate(dateString) {
+            const [year, month, day] = dateString.split('-');
+            return `${day}/${month}/${year}`;
+        }
+        
+        // Format time as "X minutes/hours/days ago"
+        function formatTimeAgo(timeString) {
+            const now = new Date();
+            const time = new Date(timeString);
+            const diff = now - time;
+            
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            
+            if (days > 0) {
+                return `${days} ${days === 1 ? 'day' : 'days'} ago`;
+            } else if (hours > 0) {
+                return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+            } else if (minutes > 0) {
+                return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
+            } else {
+                return 'Just now';
+            }
+        }
+    </script>
+</body>
+</html>
